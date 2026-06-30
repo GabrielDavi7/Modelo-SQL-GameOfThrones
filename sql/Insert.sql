@@ -24,7 +24,6 @@ CREATE TABLE Profecia (
 );
 
 
-
 -- Entidades com Dependências Simples
 
 CREATE TABLE Morte (
@@ -68,7 +67,7 @@ CREATE TABLE Personagem (
 );
 
 CREATE TABLE Humanos(
-    Codigo_Personagem INT PRIMARY KEY, -- Coluna essencial que estava faltando
+    Codigo_Personagem INT PRIMARY KEY,
     Sobrenome VARCHAR(50),
     Cor_olhos VARCHAR(20),
     Cor_cabelo VARCHAR(20),
@@ -88,4 +87,90 @@ CREATE TABLE Nao_Humanos (
     Especie VARCHAR(50),
     
     CONSTRAINT fk_nao_humanos_personagem FOREIGN KEY (Codigo_personagem) REFERENCES Personagem(CODIGO)
+);
+
+
+--  Entidades com Dependências Complexas e Entidades Fracas
+
+CREATE TABLE Alianca (
+    Nome VARCHAR(100) PRIMARY KEY,
+    Data_Inicio INT, -- Representando o ano
+    Data_fim INT
+);
+
+CREATE TABLE Guerra (
+    ID SERIAL PRIMARY KEY,
+    Nome VARCHAR(100),
+    Data_inicio INT,
+    Data_fim INT 
+);
+
+CREATE TABLE Arma(
+    ID SERIAL PRIMARY KEY,  
+    Nome VARCHAR(50),
+    Tipo VARCHAR(50),
+    Material VARCHAR(50),
+
+    Nome_Casa VARCHAR(50),
+    CONSTRAINT fk_arma_casa FOREIGN KEY (Nome_Casa) REFERENCES Casa(Nome)
+);
+
+CREATE TABLE Dragao(
+    Nome VARCHAR(50) PRIMARY KEY,
+    Cor VARCHAR(30),
+    Tamanho VARCHAR(30),
+    Estado VARCHAR(15) CHECK (Estado IN ('Vivo', 'Morto', 'Desaparecido')),
+
+    NomePersonagem INT,
+    ID_Morte int,
+    CONSTRAINT fk_dragao_personagem FOREIGN KEY (NomePersonagem) REFERENCES Personagem(CODIGO),
+    CONSTRAINT fk_dragao_morte FOREIGN KEY (ID_Morte) REFERENCES Morte(ID)
+);
+
+CREATE TABLE Batalha(
+    ID SERIAL PRIMARY KEY,
+    Nome VARCHAR(100),
+    Localizacao VARCHAR(100),
+    Impacto TEXT, 
+
+    NomeDragao VARCHAR(50),
+    ID_Guerra INT,
+    CONSTRAINT fk_batalha_dragao FOREIGN KEY (NomeDragao) REFERENCES Dragao(Nome),
+    CONSTRAINT fk_batalha_guerra FOREIGN KEY (ID_Guerra) REFERENCES Guerra(ID)
+);
+
+CREATE TABLE Reino(
+    Nome VARCHAR(50) PRIMARY KEY,
+    Descricao TEXT,
+    Tipo_Governo VARCHAR(30),
+
+    -- chaves estrangeiras
+    IDCidade_Capital INT,
+    NomeContinente VARCHAR(50),
+    NomeCasa VARCHAR(50),
+
+    IDPersonagem INT,
+    Data_Inicio_Governo INT,
+    Data_Fim_Governo INT,
+    Predecessor_Governo INT,
+    Sucessor_Governo INT,
+
+    CONSTRAINT fk_reino_cidade_capital FOREIGN KEY (IDCidade_Capital) REFERENCES Cidade(ID),
+    CONSTRAINT fk_reino_continente FOREIGN KEY (NomeContinente) REFERENCES Continente(Nome),
+    CONSTRAINT fk_reino_casa FOREIGN KEY (NomeCasa) REFERENCES Casa(Nome), 
+    CONSTRAINT fk_reino_personagem FOREIGN KEY (IDPersonagem) REFERENCES Personagem(CODIGO), 
+    CONSTRAINT fk_reino_predecessor FOREIGN KEY (Predecessor_Governo) REFERENCES Personagem(CODIGO), 
+    CONSTRAINT fk_reino_sucessor FOREIGN KEY (Sucessor_Governo) REFERENCES Personagem(CODIGO) 
+);
+
+CREATE TABLE Animais(
+    Nome VARCHAR(50),
+    Codigo INT, -- FK que vira parte da PK
+    AnoNas INT,
+    AnoMorte INT,
+    Especie VARCHAR(50),
+    
+    -- Chave Primária Composta (exigência da Entidade Fraca)
+    PRIMARY KEY (Nome, Codigo),
+    CONSTRAINT fk_animais_personagem FOREIGN KEY (Codigo) REFERENCES Personagem(Codigo)
 );
