@@ -18,7 +18,7 @@ CREATE TABLE Profissao (
 
 CREATE TABLE Profecia (
     Id_profecia SERIAL PRIMARY KEY,
-    Nome VARCHAR(80),
+    Nome VARCHAR(80) NOT NULL, 
     descricao TEXT,
     origem VARCHAR(50)
 );
@@ -27,7 +27,7 @@ CREATE TABLE Profecia (
 
 CREATE TABLE Morte (
     ID SERIAL PRIMARY KEY,
-    data_morte INT, -- data da morte em ANO
+    data_morte INT CHECK (data_morte > 0), 
     descricao TEXT,
     Localizacao VARCHAR(100)
 );
@@ -35,7 +35,7 @@ CREATE TABLE Morte (
 CREATE TABLE Cidade (
     ID SERIAL PRIMARY KEY,
     Nome VARCHAR(80) NOT NULL,
-    Data_Construcao INT, -- data da construcao em ANO
+    Data_Construcao INT, 
     Historia TEXT,
     IDMorte INT,
     CONSTRAINT fk_cidade_morte FOREIGN KEY (IDMorte) REFERENCES Morte(ID) ON DELETE SET NULL
@@ -44,7 +44,7 @@ CREATE TABLE Cidade (
 CREATE TABLE Reino (
     Nome VARCHAR(50) PRIMARY KEY,
     Descricao TEXT,
-    Tipo_Governo VARCHAR(30) DEFAULT 'Monarquia', -- Adicionado restrição DEFAULT (nao tinha no commit passado foi pedido no nosso trabalho)
+    Tipo_Governo VARCHAR(30) DEFAULT 'Monarquia', 
     IDCidade_Capital INT,
     NomeContinente VARCHAR(50),
     IDPersonagem INT,
@@ -52,6 +52,7 @@ CREATE TABLE Reino (
     Data_Fim_Governo INT,
     Predecessor_Governo INT,
     Sucessor_Governo INT,
+    CONSTRAINT ck_reino_datas CHECK (Data_Fim_Governo >= Data_Inicio_Governo), 
     CONSTRAINT fk_reino_cidade_capital FOREIGN KEY (IDCidade_Capital) REFERENCES Cidade(ID) ON DELETE SET NULL,
     CONSTRAINT fk_reino_continente FOREIGN KEY (NomeContinente) REFERENCES Continente(Nome) ON DELETE SET NULL
 );
@@ -68,17 +69,19 @@ CREATE TABLE Casa (
     CONSTRAINT fk_casa_reino FOREIGN KEY (NomeReino) REFERENCES Reino(Nome) ON DELETE SET NULL
 );
 
+-- Resolvendo dependência circular do Reino com a Casa
 ALTER TABLE Reino ADD COLUMN NomeCasa VARCHAR(50);
 ALTER TABLE Reino ADD CONSTRAINT fk_reino_casa FOREIGN KEY (NomeCasa) REFERENCES Casa(Nome) ON DELETE SET NULL;
 
 CREATE TABLE Personagem (
     CODIGO SERIAL PRIMARY KEY,
     Nome VARCHAR(80) NOT NULL,
-    tipo_personagem CHAR(1) DEFAULT 'H' CHECK (tipo_personagem IN ('H', 'N')), -- Adicionado DEFAULT
+    tipo_personagem CHAR(1) DEFAULT 'H' CHECK (tipo_personagem IN ('H', 'N')), 
     IDMorte INT,
     CONSTRAINT fk_personagem_morte FOREIGN KEY (IDMorte) REFERENCES Morte(ID) ON DELETE SET NULL
 );
 
+-- Resolvendo dependências circulares do Reino com Personagem
 ALTER TABLE Reino ADD CONSTRAINT fk_reino_personagem FOREIGN KEY (IDPersonagem) REFERENCES Personagem(CODIGO) ON DELETE SET NULL;
 ALTER TABLE Reino ADD CONSTRAINT fk_reino_predecessor FOREIGN KEY (Predecessor_Governo) REFERENCES Personagem(CODIGO) ON DELETE SET NULL;
 ALTER TABLE Reino ADD CONSTRAINT fk_reino_sucessor FOREIGN KEY (Sucessor_Governo) REFERENCES Personagem(CODIGO) ON DELETE SET NULL;
@@ -114,7 +117,7 @@ CREATE TABLE Alianca (
 
 CREATE TABLE Guerra (
     ID SERIAL PRIMARY KEY,
-    Nome VARCHAR(100),
+    Nome VARCHAR(100) UNIQUE, 
     Data_inicio INT,
     Data_fim INT 
 );
@@ -170,6 +173,7 @@ CREATE TABLE Casou (
     Periodo INT,
     MotivoFim VARCHAR(100),
     PRIMARY KEY (Codigo_Personagem1, Codigo_Personagem2, DataComeco),
+    CONSTRAINT ck_casou_datas CHECK (DataFim >= DataComeco), 
     CONSTRAINT fk_casou_p1 FOREIGN KEY (Codigo_Personagem1) REFERENCES Personagem(CODIGO) ON DELETE CASCADE,
     CONSTRAINT fk_casou_p2 FOREIGN KEY (Codigo_Personagem2) REFERENCES Personagem(CODIGO) ON DELETE CASCADE
 );
@@ -216,7 +220,7 @@ CREATE TABLE Integra_se (
 
 CREATE TABLE Pertencimento (
     ID SERIAL PRIMARY KEY,
-    Periodo INT,
+    Periodo INT DEFAULT 1,
     IDArma INT,
     Codigo_Personagem INT,
     CONSTRAINT fk_pertencimento_arma FOREIGN KEY (IDArma) REFERENCES Arma(ID) ON DELETE CASCADE,
@@ -237,9 +241,11 @@ CREATE TABLE Participa_Profecia (
 CREATE TABLE Causam (
     Codigo_Personagem INT,
     ID_Morte INT,
+    ID_Arma INT,
     PRIMARY KEY (Codigo_Personagem, ID_Morte),
     CONSTRAINT fk_causam_personagem FOREIGN KEY (Codigo_Personagem) REFERENCES Personagem(CODIGO) ON DELETE CASCADE,
-    CONSTRAINT fk_causam_morte FOREIGN KEY (ID_Morte) REFERENCES Morte(ID) ON DELETE CASCADE
+    CONSTRAINT fk_causam_morte FOREIGN KEY (ID_Morte) REFERENCES Morte(ID) ON DELETE CASCADE,
+    CONSTRAINT fk_causam_arma FOREIGN KEY (ID_Arma) REFERENCES Arma(ID) ON DELETE SET NULL 
 );
 
 CREATE TABLE ParticipouEM (
@@ -267,6 +273,7 @@ CREATE TABLE FazParte_Casa (
     Data_Inicio INT,
     Data_Fim INT,
     PRIMARY KEY (NomeCasa, Codigo_Personagem, Data_Inicio),
+    CONSTRAINT ck_fazparte_casa_datas CHECK (Data_Fim >= Data_Inicio), 
     CONSTRAINT fk_fazparte_casa FOREIGN KEY (NomeCasa) REFERENCES Casa(Nome) ON DELETE CASCADE,
     CONSTRAINT fk_fazparte_personagem FOREIGN KEY (Codigo_Personagem) REFERENCES Personagem(CODIGO) ON DELETE CASCADE
 );
