@@ -9,8 +9,12 @@ DELETE FROM Arma; -- Remove armas cadastradas
 DELETE FROM Personagem; -- Remove personagens cadastrados
 DELETE FROM Casa; -- Remove casas cadastradas
 DELETE FROM Morte; -- Remove registros de mortes
+DELETE FROM Continente; -- Remove continentes cadastrados
+DELETE FROM Raca; -- Remove raças cadastradas
+DELETE FROM Profissao; -- Remove profissões cadastradas
+DELETE FROM Profecia; -- Remove profecias cadastradas
 
--- 2. MORTES
+-- 1. MORTES
 INSERT INTO Morte (ID, data_morte, descricao, Localizacao) VALUES
 (1, 302, 'Decapitado por insubordinação.', 'Castelo Negro'), -- morte de Janos Slynt
 (2, 303, 'Garganta cortada.', 'As Gêmeas'), -- morte de Walder Frey
@@ -19,7 +23,7 @@ INSERT INTO Morte (ID, data_morte, descricao, Localizacao) VALUES
 (7, 303, 'Executado após julgamento em Winterfell por traição.', 'Winterfell'), -- Morte de Midinho com dedo de Bran Stark
 (8, 299, 'Morto em combate durante confronto com o exército do Norte.', 'Campina do Norte'); -- Morte de um personagem desconhecido
 
--- 3. PERSONAGENS
+-- 2. PERSONAGENS
 INSERT INTO Personagem (CODIGO, Nome, tipo_personagem, IDMorte) VALUES
 (1, 'Eddard Stark', 'H', NULL), -- Ned Stark vivo antes da execução
 (2, 'Jon Snow', 'H', NULL), -- Jon Snow da Patrulha da Noite
@@ -37,9 +41,14 @@ INSERT INTO Personagem (CODIGO, Nome, tipo_personagem, IDMorte) VALUES
 (15, 'Balon Greyjoy', 'H', NULL), -- líder Greyjoy
 (16, 'Aegon I Targaryen', 'H', NULL), -- conquistador de Westeros
 (17, 'Petyr Baelish', 'H', 7), -- Midinho
-(18, 'Soldado Lannister', 'H', 8); -- Soldado random
+(18, 'Soldado Lannister', 'H', 8), -- Soldado random
+(20, 'Rei da Noite', 'N', NULL), -- Rei da Noite, líder dos Caminhantes Brancos
+(21, 'Wun Wun', 'N', NULL), -- Gigante aliado dos Stark
+(22, 'Mag Mar Tun Doh Weg', 'N', NULL), -- Gigante aliado dos Stark
+(23, 'Folha', 'N', NULL), -- Filha da Floresta, aliada dos Stark
+(24, 'Senhor dos Ossos', 'N', NULL); -- Caminhante Branco
 
--- 4. CASAS
+-- 3. CASAS
 INSERT INTO Casa (Nome, Bandeira, Lema_da_casa) VALUES
 ('Stark', 'Lobo Gigante', 'O Inverno Está Chegando'), -- Casa Stark do Norte
 ('Lannister', 'Leão Dourado', 'Ouça-me Rugir'), -- Casa Lannister de Rochedo Casterly
@@ -53,7 +62,7 @@ INSERT INTO Casa (Nome, Bandeira, Lema_da_casa) VALUES
 ('Frey', 'Torres Gêmeas', NULL), -- Casa Frey das Gêmeas
 ('Bolton', 'Homem Esfolado', 'Nossas Lâminas São Afiadas'); -- Casa Bolton do Forte do Pavor
 
--- 5. ARMAS
+-- 4. ARMAS
 INSERT INTO Arma (ID, Nome, Tipo, Material, Nome_Casa) VALUES
 (1, 'Garra Longa', 'Espada Bastarda', 'Aço Valiriano', 'Stark'), -- espada de Jon Snow
 (2, 'Agulha', 'Espada Fina', 'Aço de Castelo', 'Stark'), -- espada de Arya Stark
@@ -62,7 +71,7 @@ INSERT INTO Arma (ID, Nome, Tipo, Material, Nome_Casa) VALUES
 (5, 'Lamento da Viúva', 'Espada Longa', 'Aço Valiriano', 'Lannister'), -- espada dos Lannister
 (7, 'Espada de Aço Stark', 'Espada Longa', 'Aço de Castelo', 'Stark'); -- representa espada do rob
 
--- 6. GUERRAS
+-- 5. GUERRAS
 INSERT INTO Guerra (ID, Nome) VALUES
 (1, 'Guerra dos Cinco Reis'), -- guerra pela sucessão do Trono de Ferro
 (2, 'Rebelião de Robert'), -- guerra que derrubou os Targaryen
@@ -70,7 +79,7 @@ INSERT INTO Guerra (ID, Nome) VALUES
 (4, 'Rebelião Greyjoy'), -- revolta das Ilhas de Ferro
 (5, 'Guerra contra os Vagantes Brancos'); -- guerra contra os White Walkers
 
--- 7. BATALHAS
+-- 6. BATALHAS
 INSERT INTO Batalha (ID, Nome, ID_Guerra) VALUES
 (1, 'Batalha dos Bastardos', 1), -- Jon Snow vs Ramsay Bolton
 (2, 'Batalha do Tridente', 2), -- Robert vs Rhaegar
@@ -80,7 +89,7 @@ INSERT INTO Batalha (ID, Nome, ID_Guerra) VALUES
 (6, 'Batalha da Água Negra', 1), -- defesa de Porto Real
 (7, 'Bosque dos Murmúrios', 1); -- Batalha onde o Jaime é capturado
 
--- 8. FAZ PARTE DA CASA
+-- 7. FAZ PARTE DA CASA
 INSERT INTO FazParte_Casa (NomeCasa, Codigo_Personagem, Data_Inicio) VALUES
 ('Stark', 1, 263), -- Ned Stark na Casa Stark
 ('Stark', 2, 281), -- Jon Snow na Patrulha da Noite/Stark
@@ -95,9 +104,10 @@ INSERT INTO FazParte_Casa (NomeCasa, Codigo_Personagem, Data_Inicio) VALUES
 ('Greyjoy', 15, 260), -- Balon Greyjoy
 ('Targaryen', 16, 2); -- Aegon I Targaryen
 
--- 9. PARTICIPAÇÃO EM BATALHAS
+-- 8. PARTICIPAÇÃO EM BATALHAS
 INSERT INTO ParticipouEM (Codigo_Personagem, ID_Batalha, ID_Guerra) VALUES
 (2, 1, 1), -- Jon Snow na Batalha dos Bastardos
+(11, 1, 1), -- Rickon na Batalha dos Bastardos onde morre
 (1, 2, 2), -- Ned Stark no Tridente
 (14, 2, 2), -- Robert Baratheon no Tridente
 (16, 3, 3), -- Aegon I no Campo de Fogo
@@ -109,10 +119,101 @@ INSERT INTO ParticipouEM (Codigo_Personagem, ID_Batalha, ID_Guerra) VALUES
 (7, 7, 1), -- Robb Stark na captura de Jaime Lannister
 (8, 7, 1); -- Catelyn Stark na captura de Jaime Lannister (mesma batalha que Robb, apenas participação)
 
--- 10. CAUSAM (assassinatos)
+-- 9. CAUSAM (assassinatos)
 INSERT INTO Causam (Codigo_Personagem, ID_Morte, ID_Arma) VALUES
 (2, 1, 1), -- Jon matou Janos Slynt com Garra Longa
 (3, 2, 2), -- Arya matou Walder Frey com Agulha
 (1, 6, 3), -- Ned executou Will com Gelo
 (7, 8, 7), -- Robb Stark mata soldado Lannister em batalha (Guerra dos Cinco Reis)
 (9, 7, NULL); -- Bran Stark causa indiretamente a morte de Petyr Baelish ao revelar suas ações em Winterfell
+
+-- 10. Continentes
+
+INSERT INTO Continente (Nome, Descricao, Clima, Tipo_Producao) VALUES
+('Westeros', 'Continente onde se passam os principais eventos.', 'Temperado/Frio', 'Agricultura e Mineração'),
+('Essos', 'Vasto continente a leste de Westeros.', 'Árido/Tropical', 'Comércio e Escravos'),
+('Sothoryos', 'Continente selvagem e pouco explorado.', 'Tropical', 'Especiarias'),
+('Ulthos', 'Terras misteriosas ao sul de Essos.', 'Desconhecido', 'Desconhecido'),
+('Terras de Sempre Inverno', 'Extremo norte gelado.', 'Ártico', 'Nenhuma');
+
+
+-- 11. Raça
+INSERT INTO Raca (Nome, Caracteristicas) VALUES
+('Humano', 'Seres versáteis que dominam os Sete Reinos.'),
+('Dragão', 'Criaturas aladas que cospem fogo e magia.'),
+('Gigante', 'Seres imensos que vivem além da Muralha.'),
+('Filhos da Floresta', 'Povo antigo com magia ligada à natureza.'),
+('Caminhante Branco', 'Criaturas de gelo que lideram os exércitos de mortos.');
+
+-- 12. Profissão
+INSERT INTO Profissao (Nome) VALUES
+('Rei'), 
+('Mão do Rei'), 
+('Cavaleiro'), 
+('Meistre'), 
+('Patrulheiro da Noite');
+
+--  13. Profecias
+    -- Obs: Omitimos a coluna Id_profecia no INSERT pois o tipo SERIAL preenche sozinho.
+INSERT INTO Profecia (Nome, descricao, origem) VALUES
+('O Príncipe Que Foi Prometido', 'Aquele que trará o amanhecer e derrotará a escuridão.', 'Religião de R''hllor'),
+('O Garanhão Que Monta o Mundo', 'Um líder Khal que unirá todos os Dothraki em um só khalasar.', 'Cultura Dothraki'),
+('O Valonqar', 'A reencarnação do herói que forjou a Luminífera.', 'Alto Valiriano'),
+('A Profecia da Maggy', 'A rainha mais jovem e bela tomará tudo que lhe é querido.', 'Magia do Sangue'),
+('O Dragão de Três Cabeças', 'O dragão deve ter três cabeças para que a linhagem vença.', 'Dinastia Targaryen');
+
+-- 14. Cidades
+INSERT INTO Cidade (ID, Nome, Data_Construcao, Historia, IDMorte) VALUES
+(1, 'Winterfell', 0, 'Sede ancestral da Casa Stark e capital do Norte.', NULL),
+(2, 'Porto Real', 1, 'Capital dos Sete Reinos, fundada por Aegon.', 1),
+(3, 'As Gêmeas', 500, 'Sede da Casa Frey, local do Casamento Vermelho.', 2),
+(4, 'Pedra do Dragão', 100, 'Antiga fortaleza da Casa Targaryen.', NULL),
+(5, 'Lannisporto', 200, 'Principal porto do Oeste e fortaleza Lannister.', NULL);
+
+-- 15. REINO (Depende de Cidade para a Capital e Continente)
+INSERT INTO Reino (Nome, Descricao, Tipo_Governo, IDCidade_Capital, NomeContinente) VALUES
+('Norte', 'Terras vastas, frias e implacáveis.', 'Monarquia', 1, 'Westeros'),
+('Terras Ocidentais', 'Região rica em minas de ouro.', 'Monarquia', 5, 'Westeros'),
+('Terras da Coroa', 'Região central governada pelo Trono de Ferro.', 'Monarquia', 2, 'Westeros'),
+('Campina', 'O grande celeiro dos Sete Reinos.', 'Monarquia', NULL, 'Westeros'),
+('Vale de Arryn', 'Região isolada e protegida por montanhas.', 'Monarquia', NULL, 'Westeros');
+
+-- 16. HUMANOS
+INSERT INTO Humanos (Codigo_Personagem, Sobrenome, Cor_olhos, Cor_cabelo, Genero, Data_nascimento, NomeRaca, IDCidade) VALUES
+(1, 'Stark', 'Cinza', 'Castanho', 'M', 263, 'Humano', 1), -- Ned Stark (Nasceu em Winterfell)
+(2, 'Snow', 'Cinza', 'Preto', 'M', 281, 'Humano', 1), -- Jon Snow
+(3, 'Stark', 'Cinza', 'Castanho', 'F', 289, 'Humano', 1), -- Arya Stark
+(12, 'Lannister', 'Verde', 'Loiro', 'M', 242, 'Humano', 5), -- Tywin Lannister
+(13, 'Targaryen', 'Violeta', 'Prateado', 'F', 284, 'Humano', 4); -- Daenerys Targaryen
+
+-- 17. NÃO-HUMANOS
+INSERT INTO Nao_Humanos (Codigo_personagem, Nome, Especie) VALUES
+(20, 'Rei da Noite', 'Caminhante Branco'),
+(21, 'Wun Wun', 'Gigante'),
+(22, 'Mag Mar Tun Doh Weg', 'Gigante'),
+(23, 'Folha', 'Filhos da Floresta'),
+(24, 'Senhor dos Ossos', 'Caminhante Branco');
+
+-- 18. ALIANÇAS
+INSERT INTO Alianca (Nome, Data_Inicio, Data_fim) VALUES
+('Pacto de Gelo e Fogo', 129, 131),
+('Aliança Rebelde', 282, 283),
+('Aliança Lannister-Frey-Bolton', 299, 303),
+('A Grande Aliança do Norte', 303, NULL), -- NULL porque a aliança ainda vigora
+('Pacto dos Primeiros Homens', 0, 1000);
+
+-- 19. DRAGÕES
+INSERT INTO Dragao (Nome, Cor, Tamanho, Estado, NomePersonagem, ID_Morte) VALUES
+('Drogon', 'Preto e Vermelho', 'Colossal', 'Vivo', 13, NULL), -- Cavaleiro atual: Daenerys
+('Rhaegal', 'Verde e Bronze', 'Grande', 'Vivo', 13, NULL), 
+('Viserion', 'Creme e Dourado', 'Grande', 'Vivo', 13, NULL),
+('Balerion', 'Preto', 'Titânico', 'Morto', 16, NULL), -- Cavaleiro antigo: Aegon
+('Vhagar', 'Bronze', 'Colossal', 'Morto', NULL, NULL);
+
+-- 20. ANIMAIS (Entidade Fraca que depende do dono na tabela Personagem)
+INSERT INTO Animais (Nome, Codigo, AnoNas, AnoMorte, Especie) VALUES
+('Fantasma', 2, 298, NULL, 'Lobo Gigante'), -- Dono: Jon Snow (2)
+('Nymeria', 3, 298, NULL, 'Lobo Gigante'), -- Dona: Arya Stark (3)
+('Verão', 9, 298, NULL, 'Lobo Gigante'), -- Dono: Bran Stark (9)
+('Vento Cinzento', 7, 298, 299, 'Lobo Gigante'), -- Dono: Robb Stark (7)
+('Felpudo', 11, 298, 303, 'Lobo Gigante'); -- Dono: Rickon Stark (11)
