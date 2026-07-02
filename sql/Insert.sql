@@ -113,7 +113,8 @@ INSERT INTO Arma (ID, Nome, Tipo, Material, Nome_Casa) VALUES
 (4, 'Víbora Vermelha', 'Lança', 'Aço e Veneno', 'Martell'), -- arma de Oberyn Martell
 (5, 'Lamento da Viúva', 'Espada Longa', 'Aço Valiriano', 'Lannister'), -- espada dos Lannister
 (6, 'Espada de Aço', 'Espada Longa', 'Aço de Castelo', null), -- representa espada comum
-(7, 'Espada de Aço Stark', 'Espada Longa', 'Aço de Castelo', 'Stark'); -- representa espada do rob
+(7, 'Espada de Aço Stark', 'Espada Longa', 'Aço de Castelo', 'Stark'), -- representa espada do rob
+(8, 'Palavras', 'Julgamento', 'Justiça', 'Stark'); -- representativo pra colocar na tabela da morte do midinho
 
 -- 5. GUERRAS
 INSERT INTO Guerra (ID, Nome) VALUES
@@ -169,7 +170,7 @@ INSERT INTO Causam (Codigo_Personagem, ID_Morte, ID_Arma) VALUES
 (3, 2, 2), -- Arya matou Walder Frey com Agulha
 (1, 6, 3), -- Ned executou Will com Gelo
 (7, 8, 7), -- Robb Stark mata soldado Lannister em batalha (Guerra dos Cinco Reis)
-(9, 7, NULL); -- Bran Stark causa indiretamente a morte de Petyr Baelish ao revelar suas ações em Winterfell
+(9, 7, 8); -- Bran Stark causa indiretamente a morte de Petyr Baelish ao revelar suas ações em Winterfell
 
 -- 10. Continentes
 
@@ -392,7 +393,8 @@ INSERT INTO Causa (IDMorte, NomeAnimal, CodigoAnimal, NomeDragao) VALUES
 (23, NULL, NULL, 'Balerion'),    -- Causado por Dragão
 (24, 'Nymeria', 3, NULL);        -- Causado pelo lobo da Arya Stark
 
-INSERT INTO Governa (Codigo_Personagem, NomeCasa, Data_Inicio, Data_Fim) VALUES 
+-- 36. Governa (Quais personagens governaram quais casas e por quanto tempo)
+INSERT INTO Governa (Codigo_Personagem, NomeCasa, Data_Inicio, Data_Fim) VALUES  
 (1, 'Stark', 282, 298),      -- Ned Stark governa a Casa Stark
 (12, 'Lannister', 267, 300), -- Tywin Lannister governa a Casa Lannister
 (14, 'Baratheon', 283, 298), -- Robert Baratheon governa a Casa Baratheon

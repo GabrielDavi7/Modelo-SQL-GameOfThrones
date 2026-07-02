@@ -18,7 +18,7 @@ WHERE fc.NomeCasa = 'Stark';
 
 
 /*
--- CONSULTAS EXTRAS PARA TESTES durante desenvolvimento do modelo de dados
+-- CONSULTAS EXTRAS PARA TESTES durante desenvolvimento do modelo de dados aqui temos consultadas para grande partes do nosso modelo de dados
 
 -- 1. Teste de Dragões e seus Cavaleiros
 SELECT 
@@ -68,6 +68,8 @@ JOIN Cidade c ON i.ID_cidade = c.ID;
 SELECT 
     g.NomeCasa AS "Casa Nobre",
     p.Nome AS "Lorde Governante",
+    g.Data_Inicio AS "Início do Governo",
+    g.Data_Fim AS "Fim do Governo",
     c.Lema_da_casa AS "Lema da Casa",
     i.Nome_Profissao AS "Título/Profissão",
     cid.Nome AS "Cidade Sede"
