@@ -3,7 +3,6 @@ DELETE FROM FazParteRC;
 DELETE FROM Participa_Alianca;
 DELETE FROM Vencedor;
 DELETE FROM Atua;
-DELETE FROM Participou_Batalha;
 DELETE FROM Fundou;
 DELETE FROM FazParte_Casa;
 DELETE FROM MortoEm;
@@ -32,7 +31,11 @@ DELETE FROM Profecia;
 DELETE FROM Profissao;
 DELETE FROM Raca;
 DELETE FROM Continente;
-DELETE FROM Personagem;*/
+DELETE FROM Personagem;
+DELETE FROM ECapital;
+DELETE FROM Governa;
+DELETE FROM Participou;
+*/
 
 
 
@@ -254,7 +257,7 @@ INSERT INTO Alianca (Nome, Data_Inicio, Data_fim) VALUES
 ('Pacto de Gelo e Fogo', 129, 131),
 ('Aliança Rebelde', 282, 283),
 ('Aliança Lannister-Frey-Bolton', 299, 303),
-('A Grande Aliança do Norte', 303, NULL), -- NULL porque a aliança ainda vigora
+('A Grande Aliança do Norte', 303, NULL), -- NULL porque a aliança ta viva
 ('Pacto dos Primeiros Homens', 0, 1000);
 
 -- 19. DRAGÕES
@@ -303,7 +306,7 @@ INSERT INTO JaMontou (Codigo_Personagem, Nome_Dragao, Data_Inicio, Data_Fim) VAL
 (2, 'Rhaegal', 304, NULL),    -- Jon Snow (2) montou Rhaegal
 (16, 'Balerion', 0, 37),      -- Aegon I (16) montou Balerion na Conquista
 (40, 'Vhagar', 0, 44),        -- Visenya (40) montou Vhagar
-(20, 'Viserion', 304, 305);   -- O Rei da Noite (20) montou o Viserion (zumbificado)
+(20, 'Viserion', 304, 305);   -- O Rei da Noite (20) montou o Viserion 
 
 -- 25. INTERPRETA (Relaciona Profecias com Personagens e suas interpretações)
 INSERT INTO Interpreta (IDProfecia, Codigo_Personagem, Descricao, Previsao, Realizacao) VALUES
@@ -345,15 +348,7 @@ INSERT INTO Fundou (NomeCasa, Codigo_Personagem) VALUES
 ('Frey', 53),        -- Frey da Travessia (53) fundou a Casa Frey
 ('Targaryen', 16);   -- Aegon I (16) fundou a Casa Targaryen
 
---30. PARTICIPOU_BATALHA (Quais Casas participaram das batalhas)
-INSERT INTO Participou_Batalha (ID_Batalha, NomeCasa) VALUES
-(1, 'Stark'),      -- Stark lutou na Batalha dos Bastardos (ID 1)
-(1, 'Bolton'),     -- Bolton lutou na Batalha dos Bastardos (ID 1)
-(2, 'Baratheon'),  -- Baratheon lutou no Tridente (ID 2)
-(2, 'Targaryen'),  -- Targaryen lutou no Tridente (ID 2)
-(6, 'Lannister');  -- Lannister lutou na Água Negra (ID 6)
-
--- 31. TABELA Atua (Quais Casas declararam apoio nas Grandes Guerras)
+-- 30. TABELA Atua (Quais Casas declararam apoio nas Grandes Guerras)
 INSERT INTO Atua (ID_Guerra, NomeCasa) VALUES
 (1, 'Stark'),      -- Stark na Guerra dos Cinco Reis (ID 1)
 (1, 'Lannister'),  -- Lannister na Guerra dos Cinco Reis (ID 1)
@@ -361,7 +356,7 @@ INSERT INTO Atua (ID_Guerra, NomeCasa) VALUES
 (3, 'Targaryen'),  -- Targaryen na Conquista de Aegon (ID 3)
 (4, 'Greyjoy');    -- Greyjoy na Rebelião Greyjoy (ID 4)
 
--- 32. TABELA Vencedor
+-- 31. TABELA Vencedor
 INSERT INTO Vencedor (ID_Batalha, NomeCasa) VALUES
 (1, 'Stark'),      -- Starks venceram a Batalha dos Bastardos (ID 1)
 (2, 'Baratheon'),  -- Baratheons venceram o Tridente (ID 2)
@@ -369,7 +364,7 @@ INSERT INTO Vencedor (ID_Batalha, NomeCasa) VALUES
 (4, 'Baratheon'),  -- Baratheons venceram o Cerco de Pyke (ID 4)
 (6, 'Lannister');  -- Lannisters venceram a Água Negra (ID 6)
 
--- 33. TABELA Participa_AliancA
+-- 32. TABELA Participa_AliancA
 INSERT INTO Participa_Alianca (Nome_Alianca, NomeReino) VALUES
 ('A Grande Aliança do Norte', 'Norte'),
 ('Aliança Rebelde', 'Norte'),
@@ -377,7 +372,7 @@ INSERT INTO Participa_Alianca (Nome_Alianca, NomeReino) VALUES
 ('Aliança Lannister-Frey-Bolton', 'Terras Ocidentais'),
 ('Pacto de Gelo e Fogo', 'Norte');
 
--- 34. TABELA FazParteRC (Cidades pertencentes aos Reinos e o período)
+-- 33. TABELA FazParteRC (Cidades pertencentes aos Reinos e o período)
 INSERT INTO FazParteRC (IDCidade, NomeReino, DataInicio, DataFim) VALUES
 (1, 'Norte', 0, NULL),             -- Winterfell (1) sempre pertenceu ao Norte
 (3, 'Norte', 0, NULL),             -- As Gêmeas (3) associada geograficamente ao Norte
@@ -385,7 +380,7 @@ INSERT INTO FazParteRC (IDCidade, NomeReino, DataInicio, DataFim) VALUES
 (4, 'Terras da Coroa', 0, NULL),   -- Pedra do Dragão (4) nas Terras da Coroa
 (5, 'Terras Ocidentais', 0, NULL); -- Lannisporto (5) nas Terras Ocidentais
 
--- 35. CAUSAM
+-- 34. CAUSAM
 INSERT INTO Causa (IDMorte, NomeAnimal, CodigoAnimal, NomeDragao) VALUES
 (20, NULL, NULL, 'Drogon'),      -- Causado por Dragão
 (21, 'Fantasma', 2, NULL),       -- Causado pelo lobo do Jon Snow
@@ -393,7 +388,7 @@ INSERT INTO Causa (IDMorte, NomeAnimal, CodigoAnimal, NomeDragao) VALUES
 (23, NULL, NULL, 'Balerion'),    -- Causado por Dragão
 (24, 'Nymeria', 3, NULL);        -- Causado pelo lobo da Arya Stark
 
--- 36. Governa (Quais personagens governaram quais casas e por quanto tempo)
+-- 35. Governa (Quais personagens governaram quais casas e por quanto tempo)
 INSERT INTO Governa (Codigo_Personagem, NomeCasa, Data_Inicio, Data_Fim) VALUES  
 (1, 'Stark', 282, 298),      -- Ned Stark governa a Casa Stark
 (12, 'Lannister', 267, 300), -- Tywin Lannister governa a Casa Lannister
@@ -401,7 +396,7 @@ INSERT INTO Governa (Codigo_Personagem, NomeCasa, Data_Inicio, Data_Fim) VALUES
 (15, 'Greyjoy', 289, 299),   -- Balon Greyjoy governa a Casa Greyjoy
 (10, 'Bolton', 299, 303);    -- Roose Bolton governa a Casa Bolton
 
--- 37. TABELA Participou (Quais casas participaram das batalhas)
+-- 36. TABELA Participou (Quais casas participaram das batalhas)
 INSERT INTO Participou (IDBatalha, NomeCasa) VALUES
 (1, 'Stark'),
 (1, 'Bolton'),
@@ -409,10 +404,10 @@ INSERT INTO Participou (IDBatalha, NomeCasa) VALUES
 (2, 'Lannister'),
 (3, 'Greyjoy');
 
--- 38. TABELA ECapital 
+-- 37. TABELA ECapital 
 INSERT INTO ECapital (NomeAlianca, IDCidade, DataInicio, DataFim) VALUES
-('Aliança do Norte', 1, 298, 300),
+('A Grande Aliança do Norte', 1, 298, 300),
 ('Pacto de Gelo e Fogo', 1, 303, 305),
-('Aliança Lannister-Frey', 2, 299, 301),
-('Coroa e Fé', 2, 300, 302),
-('Pacto de Dorne', 5, 299, 300);
+('Aliança Lannister-Frey-Bolton', 2, 299, 301),
+('Aliança Rebelde', 2, 300, 302),
+('Pacto dos Primeiros Homens', 5, 299, 300);

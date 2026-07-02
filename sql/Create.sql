@@ -285,14 +285,6 @@ CREATE TABLE Fundou (
     CONSTRAINT fk_fundou_personagem FOREIGN KEY (Codigo_Personagem) REFERENCES Personagem(CODIGO) ON DELETE CASCADE
 );
 
-CREATE TABLE Participou_Batalha (
-    ID_Batalha INT,
-    NomeCasa VARCHAR(50),
-    PRIMARY KEY (ID_Batalha, NomeCasa),
-    CONSTRAINT fk_part_bat_batalha FOREIGN KEY (ID_Batalha) REFERENCES Batalha(ID) ON DELETE CASCADE,
-    CONSTRAINT fk_part_bat_casa FOREIGN KEY (NomeCasa) REFERENCES Casa(Nome) ON DELETE CASCADE
-);
-
 CREATE TABLE Atua (
     ID_Guerra INT,
     NomeCasa VARCHAR(50),

@@ -14,11 +14,12 @@ LEFT JOIN Causam c ON p.CODIGO = c.Codigo_Personagem
 LEFT JOIN Personagem vitima ON c.ID_Morte = vitima.IDMorte
 LEFT JOIN Arma a ON c.ID_Arma = a.ID
 LEFT JOIN Morte m ON c.ID_Morte = m.ID
-WHERE fc.NomeCasa = 'Stark';
+WHERE fc.NomeCasa = 'Stark'
+ORDER BY p.Nome ASC;
 
 
 /*
--- CONSULTAS EXTRAS PARA TESTES durante desenvolvimento do modelo de dados aqui temos consultadas para grande partes do nosso modelo de dados
+-- CONSULTAS EXTRAS PARA TESTES durante desenvolvimento do modelo de dados 
 
 -- 1. Teste de Dragões e seus Cavaleiros
 SELECT 
@@ -29,7 +30,8 @@ SELECT
     j.Data_Inicio AS "Ano que montou"
 FROM JaMontou j
 JOIN Personagem p ON j.Codigo_Personagem = p.CODIGO
-JOIN Dragao d ON j.Nome_Dragao = d.Nome;
+JOIN Dragao d ON j.Nome_Dragao = d.Nome
+ORDER BY p.Nome ASC;
 
 -- 2. Teste da Árvore Genealógica (Auto-relacionamento)
 SELECT 
@@ -39,7 +41,8 @@ SELECT
 FROM Afilia a
 JOIN Personagem filho ON a.Codigo = filho.CODIGO
 LEFT JOIN Personagem pai ON a.Pai = pai.CODIGO
-LEFT JOIN Personagem mae ON a.Mae = mae.CODIGO;
+LEFT JOIN Personagem mae ON a.Mae = mae.CODIGO
+ORDER BY filho.Nome ASC;
 
 -- 3. Teste de Batalhas, Guerras e Vencedores
 SELECT 
