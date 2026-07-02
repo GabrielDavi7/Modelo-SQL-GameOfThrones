@@ -392,9 +392,9 @@ INSERT INTO Causa (IDMorte, NomeAnimal, CodigoAnimal, NomeDragao) VALUES
 (23, NULL, NULL, 'Balerion'),    -- Causado por Dragão
 (24, 'Nymeria', 3, NULL);        -- Causado pelo lobo da Arya Stark
 
-INSERT INTO Governa (Codigo_Personagem, NomeCasa) VALUES 
-(1, 'Stark'),       -- Ned Stark governa a Casa Stark
-(12, 'Lannister'),  -- Tywin Lannister governa a Casa Lannister
-(14, 'Baratheon'),  -- Robert Baratheon governa a Casa Baratheon
-(15, 'Greyjoy'),    -- Balon Greyjoy governa a Casa Greyjoy
-(10, 'Bolton');     -- Roose Bolton governa a Casa Bolton
+INSERT INTO Governa (Codigo_Personagem, NomeCasa, Data_Inicio, Data_Fim) VALUES 
+(1, 'Stark', 282, 298),      -- Ned Stark governa a Casa Stark
+(12, 'Lannister', 267, 300), -- Tywin Lannister governa a Casa Lannister
+(14, 'Baratheon', 283, 298), -- Robert Baratheon governa a Casa Baratheon
+(15, 'Greyjoy', 289, 299),   -- Balon Greyjoy governa a Casa Greyjoy
+(10, 'Bolton', 299, 303);    -- Roose Bolton governa a Casa Bolton
