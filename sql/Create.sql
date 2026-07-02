@@ -326,3 +326,14 @@ CREATE TABLE FazParteRC (
     CONSTRAINT fk_fazparterc_cidade FOREIGN KEY (IDCidade) REFERENCES Cidade(ID) ON DELETE CASCADE,
     CONSTRAINT fk_fazparterc_reino FOREIGN KEY (NomeReino) REFERENCES Reino(Nome) ON DELETE CASCADE
 );
+
+CREATE TABLE Causa (
+    IDMorte INT,
+    NomeAnimal VARCHAR(50),
+    CodigoAnimal INT,
+    NomeDragao VARCHAR(50),
+    PRIMARY KEY (IDMorte),
+    CONSTRAINT fk_causa_morte FOREIGN KEY (IDMorte) REFERENCES Morte(ID) ON DELETE CASCADE,
+    CONSTRAINT fk_causa_animal FOREIGN KEY (NomeAnimal, CodigoAnimal) REFERENCES Animais(Nome, Codigo) ON DELETE CASCADE,
+    CONSTRAINT fk_causa_dragao FOREIGN KEY (NomeDragao) REFERENCES Dragao(Nome) ON DELETE CASCADE
+);

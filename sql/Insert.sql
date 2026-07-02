@@ -1,33 +1,38 @@
 /* a celula abaixo foi usada durante teste para deletar o banco de dados e inserir os dados novamente, caso queira usar, descomente e rode o script 
-
-DELETE FROM Causam; -- Remove relações de assassinato
-DELETE FROM ParticipouEM; -- Remove participações em batalhas
-DELETE FROM FazParte_Casa; -- Remove vínculos entre personagens e casas
-DELETE FROM Batalha; -- Remove batalhas cadastradas
-DELETE FROM Guerra; -- Remove guerras cadastradas
-DELETE FROM Arma; -- Remove armas cadastradas
-DELETE FROM Personagem; -- Remove personagens cadastrados
-DELETE FROM Casa; -- Remove casas cadastradas
-DELETE FROM Morte; -- Remove registros de mortes
-DELETE FROM Continente; -- Remove continentes cadastrados
-DELETE FROM Raca; -- Remove raças cadastradas
-DELETE FROM Profissao; -- Remove profissões cadastradas
-DELETE FROM Profecia; -- Remove profecias cadastradas
-DELETE FROM Cidade; -- Remove cidades cadastradas
-DELETE FROM Reino; -- Remove reinos cadastrados
-DELETE FROM Humanos; -- Remove humanos cadastrados
-DELETE FROM Nao_Humanos; -- Remove não-humanos cadastrados
-DELETE FROM Alianca; -- Remove alianças cadastradas
-DELETE FROM Dragao; -- Remove dragões cadastrados
-DELETE FROM Animais; -- Remove animais cadastrados
-DELETE FROM Pertencimento; -- Remove vínculos de pertencimento entre personagens e armas
-DELETE FROM Casou; -- Remove registros de casamentos
-DELETE FROM Afilia; -- Remove registros de afiliação entre personagens
-DELETE FROM JaMontou; -- Remove registros de personagens que montaram dragões
-DELETE FROM Interpreta; -- Remove registros de interpretação de profecias por personagens
-DELETE FROM Integra_se; -- Remove registros de integração de personagens em profissões e cidades
-DELETE FROM Participa_Profecia; -- Remove registros de participação de personagens em profecias
-DELETE FROM MortoEm; -- Remove registros de mortes ocorridas em batalhas e guerras*/
+DELETE FROM FazParteRC;
+DELETE FROM Participa_Alianca;
+DELETE FROM Vencedor;
+DELETE FROM Atua;
+DELETE FROM Participou_Batalha;
+DELETE FROM Fundou;
+DELETE FROM FazParte_Casa;
+DELETE FROM MortoEm;
+DELETE FROM ParticipouEM;
+DELETE FROM Causam;
+DELETE FROM Participa_Profecia;
+DELETE FROM Pertencimento;
+DELETE FROM Integra_se;
+DELETE FROM Interpreta;
+DELETE FROM JaMontou;
+DELETE FROM Afilia;
+DELETE FROM Casou;
+DELETE FROM Animais;
+DELETE FROM Batalha;
+DELETE FROM Dragao;
+DELETE FROM Arma;
+DELETE FROM Guerra;
+DELETE FROM Alianca;
+DELETE FROM Nao_Humanos;
+DELETE FROM Humanos;
+DELETE FROM Reino;
+DELETE FROM Casa;
+DELETE FROM Cidade;
+DELETE FROM Morte;
+DELETE FROM Profecia;
+DELETE FROM Profissao;
+DELETE FROM Raca;
+DELETE FROM Continente;
+DELETE FROM Personagem;*/
 
 
 
@@ -43,7 +48,12 @@ INSERT INTO Morte (ID, data_morte, descricao, Localizacao) VALUES
 (11, 303, 'Flecha no coração antes do combate.', 'Winterfell'),  -- Morte de Rickon Stark
 (12, 303, 'Múltiplas flechadas e lanças.', 'Winterfell'),        -- Morte de Wun Wun
 (13, 283, 'Golpe de martelo de guerra no peito.', 'Tridente'),   -- Morte de Rhaegar Targaryen
-(14, 283, 'Ferimentos graves em combate.', 'Tridente');          -- Morte de Lewyn Martell
+(14, 283, 'Ferimentos graves em combate.', 'Tridente'),          -- Morte de Lewyn Martell
+(20, 305, 'Queimado vivo por fogo de dragão.', 'Porto Real'),
+(21, 305, 'Devorado por um lobo gigante.', 'Winterfell'),
+(22, 299, 'Garganta arrancada em combate.', 'Terras Fluviais'),
+(23, 1, 'Incineração durante a Guerra da Conquista.', 'Campo de Fogo'),
+(24, 300, 'Ataque surpresa na floresta.', 'Acampamento Lannister');
 
 -- 2. PERSONAGENS
 INSERT INTO Personagem (CODIGO, Nome, tipo_personagem, IDMorte) VALUES
@@ -373,3 +383,11 @@ INSERT INTO FazParteRC (IDCidade, NomeReino, DataInicio, DataFim) VALUES
 (2, 'Terras da Coroa', 1, NULL),   -- Porto Real (2) na Coroa desde Aegon
 (4, 'Terras da Coroa', 0, NULL),   -- Pedra do Dragão (4) nas Terras da Coroa
 (5, 'Terras Ocidentais', 0, NULL); -- Lannisporto (5) nas Terras Ocidentais
+
+-- 35. CAUSAM
+INSERT INTO Causa (IDMorte, NomeAnimal, CodigoAnimal, NomeDragao) VALUES
+(20, NULL, NULL, 'Drogon'),      -- Causado por Dragão
+(21, 'Fantasma', 2, NULL),       -- Causado pelo lobo do Jon Snow
+(22, 'Vento Cinzento', 7, NULL), -- Causado pelo lobo do Robb Stark
+(23, NULL, NULL, 'Balerion'),    -- Causado por Dragão
+(24, 'Nymeria', 3, NULL);        -- Causado pelo lobo da Arya Stark
