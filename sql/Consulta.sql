@@ -62,3 +62,20 @@ JOIN Personagem p ON h.Codigo_Personagem = p.CODIGO
 JOIN Cidade c ON i.ID_cidade = c.ID;
 
 */
+
+/*
+-- 5. Lordes e suas Casas
+SELECT 
+    g.NomeCasa AS "Casa Nobre",
+    p.Nome AS "Lorde Governante",
+    c.Lema_da_casa AS "Lema da Casa",
+    i.Nome_Profissao AS "Título/Profissão",
+    cid.Nome AS "Cidade Sede"
+FROM Governa g
+JOIN Personagem p ON g.Codigo_Personagem = p.CODIGO
+JOIN Casa c ON g.NomeCasa = c.Nome
+LEFT JOIN Integra_se i ON p.CODIGO = i.Codigo_Personagem
+LEFT JOIN Cidade cid ON i.ID_cidade = cid.ID
+ORDER BY g.NomeCasa;
+
+*/

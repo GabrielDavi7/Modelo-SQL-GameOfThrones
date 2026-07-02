@@ -337,3 +337,11 @@ CREATE TABLE Causa (
     CONSTRAINT fk_causa_animal FOREIGN KEY (NomeAnimal, CodigoAnimal) REFERENCES Animais(Nome, Codigo) ON DELETE CASCADE,
     CONSTRAINT fk_causa_dragao FOREIGN KEY (NomeDragao) REFERENCES Dragao(Nome) ON DELETE CASCADE
 );
+
+CREATE TABLE Governa (
+    Codigo_Personagem INT,
+    NomeCasa VARCHAR(50),
+    PRIMARY KEY (Codigo_Personagem, NomeCasa),
+    CONSTRAINT fk_governa_personagem FOREIGN KEY (Codigo_Personagem) REFERENCES Personagem(CODIGO) ON DELETE CASCADE,
+    CONSTRAINT fk_governa_casa FOREIGN KEY (NomeCasa) REFERENCES Casa(Nome) ON DELETE CASCADE
+);
