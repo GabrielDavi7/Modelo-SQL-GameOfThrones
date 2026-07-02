@@ -1,4 +1,4 @@
-/* a celula abaixo foi usada durante teste para deletar o banco de dados e inserir os dados novamente, caso queira usar, descomente e rode o script */
+/* a celula abaixo foi usada durante teste para deletar o banco de dados e inserir os dados novamente, caso queira usar, descomente e rode o script 
 
 DELETE FROM Causam; -- Remove relações de assassinato
 DELETE FROM ParticipouEM; -- Remove participações em batalhas
@@ -27,7 +27,7 @@ DELETE FROM JaMontou; -- Remove registros de personagens que montaram dragões
 DELETE FROM Interpreta; -- Remove registros de interpretação de profecias por personagens
 DELETE FROM Integra_se; -- Remove registros de integração de personagens em profissões e cidades
 DELETE FROM Participa_Profecia; -- Remove registros de participação de personagens em profecias
-DELETE FROM MortoEm; -- Remove registros de mortes ocorridas em batalhas e guerras
+DELETE FROM MortoEm; -- Remove registros de mortes ocorridas em batalhas e guerras*/
 
 
 
