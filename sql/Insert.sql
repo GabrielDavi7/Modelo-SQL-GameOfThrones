@@ -400,3 +400,19 @@ INSERT INTO Governa (Codigo_Personagem, NomeCasa, Data_Inicio, Data_Fim) VALUES
 (14, 'Baratheon', 283, 298), -- Robert Baratheon governa a Casa Baratheon
 (15, 'Greyjoy', 289, 299),   -- Balon Greyjoy governa a Casa Greyjoy
 (10, 'Bolton', 299, 303);    -- Roose Bolton governa a Casa Bolton
+
+-- 37. TABELA Participou (Quais casas participaram das batalhas)
+INSERT INTO Participou (IDBatalha, NomeCasa) VALUES
+(1, 'Stark'),
+(1, 'Bolton'),
+(2, 'Baratheon'),
+(2, 'Lannister'),
+(3, 'Greyjoy');
+
+-- 38. TABELA ECapital 
+INSERT INTO ECapital (NomeAlianca, IDCidade, DataInicio, DataFim) VALUES
+('Aliança do Norte', 1, 298, 300),
+('Pacto de Gelo e Fogo', 1, 303, 305),
+('Aliança Lannister-Frey', 2, 299, 301),
+('Coroa e Fé', 2, 300, 302),
+('Pacto de Dorne', 5, 299, 300);

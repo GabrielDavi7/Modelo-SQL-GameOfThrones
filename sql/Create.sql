@@ -347,3 +347,21 @@ CREATE TABLE Governa (
     CONSTRAINT fk_governa_personagem FOREIGN KEY (Codigo_Personagem) REFERENCES Personagem(CODIGO) ON DELETE CASCADE,
     CONSTRAINT fk_governa_casa FOREIGN KEY (NomeCasa) REFERENCES Casa(Nome) ON DELETE CASCADE
 );
+
+CREATE TABLE Participou (
+    IDBatalha INT,
+    NomeCasa VARCHAR(50),
+    PRIMARY KEY (IDBatalha, NomeCasa),
+    CONSTRAINT fk_participou_batalha FOREIGN KEY (IDBatalha) REFERENCES Batalha(ID) ON DELETE CASCADE,
+    CONSTRAINT fk_participou_casa FOREIGN KEY (NomeCasa) REFERENCES Casa(Nome) ON DELETE CASCADE
+);
+
+CREATE TABLE ECapital (
+    NomeAlianca VARCHAR(100),
+    IDCidade INT,
+    DataInicio INT,
+    DataFim INT,
+    PRIMARY KEY (NomeAlianca, IDCidade),
+    CONSTRAINT fk_ecapital_alianca FOREIGN KEY (NomeAlianca) REFERENCES Alianca(Nome) ON DELETE CASCADE,
+    CONSTRAINT fk_ecapital_cidade FOREIGN KEY (IDCidade) REFERENCES Cidade(ID) ON DELETE CASCADE
+);
