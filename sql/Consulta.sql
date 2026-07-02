@@ -18,7 +18,7 @@ WHERE fc.NomeCasa = 'Stark';
 
 
 /*
--- CONSULTAS EXTRAS PARA TESTES
+-- CONSULTAS EXTRAS PARA TESTES durante desenvolvimento do modelo de dados
 
 -- 1. Teste de Dragões e seus Cavaleiros
 SELECT 
